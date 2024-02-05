@@ -1,0 +1,27 @@
+{
+  "name": "nodewebsockets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./dist/server.js",
+    "compile": "rm -r dist && tsc && npm run copy-assets",
+    "copy-assets": "copyfiles -u 1 \"src/**/*.html\" dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.16",
+    "copyfiles": "^2.4.1",
+    "dotenv": "^16.4.1",
+    "nodemon": "^3.0.3",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4"
+  }
+}
