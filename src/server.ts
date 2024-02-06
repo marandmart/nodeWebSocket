@@ -14,8 +14,6 @@ httpServer.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
 });
 
-const io = new Server(httpServer);
+const io: Server = new Server(httpServer);
 
-io.on("connection", () => {
-  console.log("Client Connected");
-});
+export default io;
