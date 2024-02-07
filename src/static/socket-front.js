@@ -2,8 +2,10 @@ import { updateText } from "./documentScript.js";
 
 var socket = io();
 
-function selecteDocument(documentName) {
-    socket.emit("select-document", documentName)
+function selectDocument(documentName) {
+    socket.emit("select-document", documentName, (text) => {
+        updateText(text)
+    })
 }
 
 function emitText(data) {
@@ -11,9 +13,9 @@ function emitText(data) {
 }
 
 // Updates text when text is typed
-socket.on("update-broadcast", (updatedText, documentName) => {
-    updateText(updatedText, documentName)
+socket.on("update-broadcast", (updatedText) => {
+    updateText(updatedText)
 })
 
 
-export { emitText, selecteDocument }
+export { emitText, selectDocument }

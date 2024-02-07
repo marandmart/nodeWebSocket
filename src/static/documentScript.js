@@ -1,4 +1,4 @@
-import { emitText, selecteDocument } from "./socket-front.js";
+import { emitText, selectDocument } from "./socket-front.js";
 
 const params = new URLSearchParams(window.location.search);
 const documentName = params.get("name");
@@ -8,11 +8,11 @@ const documentTitle = document.getElementById("titulo-documento");
 
 documentTitle.textContent = documentName || "Document sem título";
 
-selecteDocument(documentName);
+selectDocument(documentName);
 
 textEditor.addEventListener("keyup", () => {
     emitText({
-        newText: textEditor.value, documentName
+        text: textEditor.value, documentName
     });
 });
 
@@ -21,3 +21,4 @@ function updateText(updatedText) {
 }
 
 export { updateText }
+
