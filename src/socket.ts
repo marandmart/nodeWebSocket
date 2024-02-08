@@ -1,6 +1,6 @@
 import io from "./server.js";
 import { Socket } from "socket.io";
-import { documentCollection } from "./database/dbConnect.js";
+import { findDocument, updateDocument } from "./database/utils.js";
 
 io.on("connection", (socket: Socket) => {
   console.log("Client Connected with ID:", socket.id);
@@ -21,23 +21,11 @@ io.on("connection", (socket: Socket) => {
   socket.on(
     "text-changed",
     async ({ text, documentName }: { text: string; documentName: string }) => {
-      const document = await findDocument(documentName);
-      if (document) {
-        document.text = text;
+      const updateResult = await updateDocument(documentName, text);
+
+      if (updateResult && updateResult.modifiedCount === 1) {
+        socket.to(documentName).emit("update-broadcast", text);
       }
-      socket.to(documentName).emit("update-broadcast", text);
     }
   );
 });
-
-const findDocument = async (documentName: string) => {
-  if (documentCollection) {
-    const foundDocument = await documentCollection.findOne({
-      name: documentName,
-    });
-
-    if (foundDocument) {
-      return foundDocument;
-    }
-  }
-};
