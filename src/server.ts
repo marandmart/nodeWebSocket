@@ -3,6 +3,8 @@ import routes from "./routes/index.js";
 import http from "http";
 import { Server } from "socket.io";
 
+import "./database/dbConnect.js";
+
 const PORT = process.env.PORT || 3000;
 const app = express();
 

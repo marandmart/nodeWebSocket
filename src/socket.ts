@@ -1,20 +1,6 @@
 import io from "./server.js";
 import { Socket } from "socket.io";
-
-const documents = [
-  {
-    name: "JavaScript",
-    text: "texto de javascript...",
-  },
-  {
-    name: "Node",
-    text: "texto de node...",
-  },
-  {
-    name: "Socket. IO",
-    text: "texto de socket.io...",
-  },
-];
+import { documentCollection } from "./database/dbConnect.js";
 
 io.on("connection", (socket: Socket) => {
   console.log("Client Connected with ID:", socket.id);
@@ -22,9 +8,9 @@ io.on("connection", (socket: Socket) => {
   // Puts documents in a room. Groups them
   socket.on(
     "select-document",
-    (documentName: string, loadPreExistingText: Function) => {
+    async (documentName: string, loadPreExistingText: Function) => {
       socket.join(documentName);
-      const document = findDocument(documentName);
+      const document = await findDocument(documentName);
 
       if (document) {
         loadPreExistingText(document.text);
@@ -34,8 +20,8 @@ io.on("connection", (socket: Socket) => {
 
   socket.on(
     "text-changed",
-    ({ text, documentName }: { text: string; documentName: string }) => {
-      const document = findDocument(documentName);
+    async ({ text, documentName }: { text: string; documentName: string }) => {
+      const document = await findDocument(documentName);
       if (document) {
         document.text = text;
       }
@@ -44,11 +30,14 @@ io.on("connection", (socket: Socket) => {
   );
 });
 
-const findDocument = (documentName: string) => {
-  const foundDocument = documents.find(
-    ({ name }: { name: string }) => name === documentName
-  );
-  if (foundDocument) {
-    return foundDocument;
+const findDocument = async (documentName: string) => {
+  if (documentCollection) {
+    const foundDocument = await documentCollection.findOne({
+      name: documentName,
+    });
+
+    if (foundDocument) {
+      return foundDocument;
+    }
   }
 };
