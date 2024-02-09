@@ -16,10 +16,16 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("new-document-created", async (name: string) => {
-    const response = await createNewDocument(name);
+    const documentAlreadyExists = (await findDocument(name)) != null;
 
-    if (response?.acknowledged) {
-      io.emit("add-document-to-home", name);
+    if (documentAlreadyExists) {
+      socket.emit("document-already-exists", name);
+    } else {
+      const response = await createNewDocument(name);
+
+      if (response?.acknowledged) {
+        io.emit("add-document-to-home", name);
+      }
     }
   });
 

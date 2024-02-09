@@ -10,6 +10,10 @@ socket.on("add-document-to-home", (name) => {
     addDocumentListing(name);
 })
 
+socket.on("document-already-exists", (documentName) => {
+    alert(`A document with name: ${documentName} already exists`);
+})
+
 function createNewDocumentListing(name) {
     socket.emit("new-document-created", name)
 }
