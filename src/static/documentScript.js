@@ -1,4 +1,4 @@
-import { emitText, selectDocument } from "./socket-front.js";
+import { emitText, selectDocument } from "./socket-front-document.js";
 
 const params = new URLSearchParams(window.location.search);
 const documentName = params.get("name");

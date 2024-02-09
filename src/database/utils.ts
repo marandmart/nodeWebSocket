@@ -22,4 +22,9 @@ const updateDocument = async (documentName: string, updatedText: string) => {
   }
 };
 
-export { findDocument, updateDocument };
+const retrieveDocuments = async () => {
+  const documents = await documentCollection?.find().toArray();
+  return documents;
+};
+
+export { findDocument, updateDocument, retrieveDocuments };

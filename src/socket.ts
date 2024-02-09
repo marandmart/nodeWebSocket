@@ -1,9 +1,18 @@
 import io from "./server.js";
 import { Socket } from "socket.io";
-import { findDocument, updateDocument } from "./database/utils.js";
+import {
+  findDocument,
+  updateDocument,
+  retrieveDocuments,
+} from "./database/utils.js";
 
 io.on("connection", (socket: Socket) => {
   console.log("Client Connected with ID:", socket.id);
+
+  socket.on("retrieve-documents", async (returnDocuments: Function) => {
+    const documents = await retrieveDocuments();
+    returnDocuments(documents);
+  });
 
   // Puts documents in a room. Groups them
   socket.on(
