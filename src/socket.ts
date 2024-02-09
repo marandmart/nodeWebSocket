@@ -4,6 +4,7 @@ import {
   findDocument,
   updateDocument,
   retrieveDocuments,
+  createNewDocument,
 } from "./database/utils.js";
 
 io.on("connection", (socket: Socket) => {
@@ -12,6 +13,14 @@ io.on("connection", (socket: Socket) => {
   socket.on("retrieve-documents", async (returnDocuments: Function) => {
     const documents = await retrieveDocuments();
     returnDocuments(documents);
+  });
+
+  socket.on("new-document-created", async (name: string) => {
+    const response = await createNewDocument(name);
+
+    if (response?.acknowledged) {
+      io.emit("add-document-to-home", name);
+    }
   });
 
   // Puts documents in a room. Groups them

@@ -27,4 +27,13 @@ const retrieveDocuments = async () => {
   return documents;
 };
 
-export { findDocument, updateDocument, retrieveDocuments };
+const createNewDocument = async (name: string) => {
+  const newDocument = await documentCollection?.insertOne({
+    name,
+    text: "",
+  });
+
+  return newDocument;
+};
+
+export { findDocument, updateDocument, retrieveDocuments, createNewDocument };
