@@ -1,10 +1,11 @@
-import { emitText, selectDocument } from "./socket-front-document.js";
+import { emitText, selectDocument, deleteActiveDocument } from "./socket-front-document.js";
 
 const params = new URLSearchParams(window.location.search);
 const documentName = params.get("name");
 
 const textEditor = document.getElementById("editor-texto");
 const documentTitle = document.getElementById("titulo-documento");
+const deleteButton = document.getElementById("excluir-documento");
 
 documentTitle.textContent = documentName || "Document sem título";
 
@@ -16,9 +17,20 @@ textEditor.addEventListener("keyup", () => {
     });
 });
 
+deleteButton.addEventListener("click", () => {
+    deleteActiveDocument(documentName)
+});
+
 function updateText(updatedText) {
     textEditor.value = updatedText
-}
+};
 
-export { updateText }
+function documentDeleted(deletedDocument) {
+    if (deletedDocument === documentName) {
+        alert(`Document with name: ${deletedDocument} has been deleted`);
+        window.location.href = "/";
+    }
+};
+
+export { updateText, documentDeleted }
 

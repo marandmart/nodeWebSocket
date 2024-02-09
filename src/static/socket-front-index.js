@@ -1,4 +1,4 @@
-import { addDocumentListing } from "./index.js";
+import { addDocumentListing, removeDocumentListing } from "./index.js";
 
 const socket = io();
 
@@ -12,6 +12,10 @@ socket.on("add-document-to-home", (name) => {
 
 socket.on("document-already-exists", (documentName) => {
     alert(`A document with name: ${documentName} already exists`);
+})
+
+socket.on("document-successfully-deleted", (documentName) => {
+    removeDocumentListing(documentName);
 })
 
 function createNewDocumentListing(name) {

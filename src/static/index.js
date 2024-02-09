@@ -16,10 +16,16 @@ function addDocumentListing(documentName) {
         <a
           href="document?name=${documentName}"
           class="list-group-item list-group-item-action"
+          id="document-${documentName}"
         >
           ${documentName}
         </a>
     `
-}
+};
 
-export { addDocumentListing }
+function removeDocumentListing(documentName) {
+  const targetDocument = document.getElementById(`document-${documentName}`);
+  listedDocuments.removeChild(targetDocument);
+};
+
+export { addDocumentListing, removeDocumentListing }

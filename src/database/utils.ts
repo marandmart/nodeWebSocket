@@ -36,4 +36,14 @@ const createNewDocument = async (name: string) => {
   return newDocument;
 };
 
-export { findDocument, updateDocument, retrieveDocuments, createNewDocument };
+const deleteDocument = async (name: string) => {
+  return await documentCollection?.deleteOne({ name });
+};
+
+export {
+  findDocument,
+  updateDocument,
+  retrieveDocuments,
+  createNewDocument,
+  deleteDocument,
+};

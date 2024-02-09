@@ -5,6 +5,7 @@ import {
   updateDocument,
   retrieveDocuments,
   createNewDocument,
+  deleteDocument,
 } from "./database/utils.js";
 
 io.on("connection", (socket: Socket) => {
@@ -26,6 +27,14 @@ io.on("connection", (socket: Socket) => {
       if (response?.acknowledged) {
         io.emit("add-document-to-home", name);
       }
+    }
+  });
+
+  socket.on("delete-current-document", async (documentName) => {
+    const response = await deleteDocument(documentName);
+
+    if (response?.acknowledged) {
+      io.emit("document-successfully-deleted", documentName);
     }
   });
 
