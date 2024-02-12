@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { registerNewUser } from "../database/userUtils.js";
+import { registerNewUser, findUser } from "../database/userUtils.js";
 
 type NewUser = {
   username: string;
@@ -8,12 +8,18 @@ type NewUser = {
 
 const registerEvents = (socket: Socket, _: Server) => {
   socket.on("register-new-user", async (data: NewUser) => {
-    const resp = await registerNewUser(data);
+    const user = await findUser(data.username);
 
-    if (resp?.acknowledged) {
-      socket.emit("successful-user-register");
+    if (user === null) {
+      const resp = await registerNewUser(data);
+
+      if (resp?.acknowledged) {
+        socket.emit("successful-user-register");
+      } else {
+        socket.emit("failed-user-register");
+      }
     } else {
-      socket.emit("failed-user-register");
+      socket.emit("user-already-exists");
     }
   });
 };

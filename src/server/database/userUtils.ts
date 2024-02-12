@@ -10,4 +10,8 @@ const registerNewUser = ({
   return userCollection?.insertOne({ username, password });
 };
 
-export { registerNewUser };
+const findUser = (username: string) => {
+  return userCollection?.findOne({ username });
+};
+
+export { registerNewUser, findUser };
