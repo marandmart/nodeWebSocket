@@ -3,7 +3,7 @@ import {
   findDocument,
   updateDocument,
   deleteDocument,
-} from "../database/documentUtils.js";
+} from "../database/documentService.js";
 
 const documentEvents = (socket: Socket, io: Server) => {
   socket.on("delete-current-document", async (documentName) => {

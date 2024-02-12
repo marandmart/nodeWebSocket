@@ -1,4 +1,5 @@
 import { userCollection } from "./dbConnect.js";
+import createSaltAndHash from "./utils/createSaltAndHash.js";
 
 const registerNewUser = ({
   username,
@@ -7,7 +8,9 @@ const registerNewUser = ({
   username: string;
   password: string;
 }) => {
-  return userCollection?.insertOne({ username, password });
+  const { passwordHash, salt } = createSaltAndHash(password);
+
+  return userCollection?.insertOne({ username, passwordHash, salt });
 };
 
 const findUser = (username: string) => {

@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { registerNewUser, findUser } from "../database/userUtils.js";
+import { registerNewUser, findUser } from "../database/userService.js";
 
 type NewUser = {
   username: string;

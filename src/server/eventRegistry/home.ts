@@ -2,7 +2,7 @@ import {
   findDocument,
   retrieveDocuments,
   createNewDocument,
-} from "../database/documentUtils.js";
+} from "../database/documentService.js";
 import { Server, Socket } from "socket.io";
 
 const homeEvents = (socket: Socket, io: Server) => {
