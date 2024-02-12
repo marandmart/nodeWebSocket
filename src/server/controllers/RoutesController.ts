@@ -4,14 +4,16 @@ import path from "path";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 class RoutesController {
-  static getIndex(_: express.Request, res: express.Response) {
+  static getHome(_: express.Request, res: express.Response) {
     return res.sendFile(
       path.join(__dirname, "..", "..", "public", "home", "index.html")
     );
   }
-  static getDocument(_: express.Request, res: express.Response) {
+  static getPage(req: express.Request, res: express.Response) {
+    const directory: string = !req.params.path ? "home" : req.params.path;
+
     return res.sendFile(
-      path.join(__dirname, "..", "..", "public", "document", "document.html")
+      path.join(__dirname, "..", "..", "public", directory, "index.html")
     );
   }
 
