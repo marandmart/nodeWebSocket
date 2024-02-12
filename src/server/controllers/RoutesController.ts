@@ -10,7 +10,7 @@ class RoutesController {
     );
   }
   static getPage(req: express.Request, res: express.Response) {
-    const directory: string = !req.params.path ? "home" : req.params.path;
+    const directory: string = req.params.path;
 
     return res.sendFile(
       path.join(__dirname, "..", "..", "public", directory, "index.html")
