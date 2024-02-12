@@ -6,7 +6,7 @@ import {
   retrieveDocuments,
   createNewDocument,
   deleteDocument,
-} from "./database/utils.js";
+} from "./server/database/utils.js";
 
 io.on("connection", (socket: Socket) => {
   console.log("Client Connected with ID:", socket.id);

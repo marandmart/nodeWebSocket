@@ -1,8 +1,8 @@
 import express from "express";
-import routes from "./routes/index.js";
+import routes from "./server/routes/index.js";
 import http from "http";
 import { Server } from "socket.io";
-import "./database/dbConnect.js";
+import "./server/database/dbConnect.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();

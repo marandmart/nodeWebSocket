@@ -1,4 +1,4 @@
-import { updateText, documentDeleted } from "./documentScript.js";
+import { updateText, documentDeleted } from "./document.js";
 
 var socket = io();
 

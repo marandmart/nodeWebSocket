@@ -8,5 +8,8 @@ router.get("/document", (req, res) => RoutesController.getDocument(req, res));
 router.get("/scripts/:filename", (req, res) =>
   RoutesController.serveScript(req, res)
 );
+router.get("/scripts/:directory/:filename", (req, res) =>
+  RoutesController.serveScript(req, res)
+);
 
 export default router;

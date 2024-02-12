@@ -3,17 +3,20 @@ import "dotenv/config";
 
 const CONNECTION_STRING = process.env.CONNECTION_STRING;
 const DATABASE_NAME = process.env.DATABASE_NAME;
-const COLLECTION_NAME = process.env.COLLECTION_NAME;
+const DOCUMENT_COLLECTION = process.env.DOCUMENT_COLLECTION;
+const USER_COLLECTION = process.env.USER_COLLECTION;
 
-let documentCollection: Collection | null;
+let documentCollection: Collection | null, userCollection: Collection | null;
 
-if (CONNECTION_STRING && COLLECTION_NAME) {
+if (CONNECTION_STRING && DOCUMENT_COLLECTION) {
   const client = new MongoClient(CONNECTION_STRING);
   try {
     await client.connect();
     const db = client.db(DATABASE_NAME);
     // @ts-ignore
-    documentCollection = db.collection(COLLECTION_NAME);
+    documentCollection = db.collection(DOCUMENT_COLLECTION);
+    // @ts-ignore
+    userCollection = db.collection(USER_COLLECTION);
 
     console.log("Succesfully connected to database");
   } catch (error: any) {
@@ -25,4 +28,4 @@ if (CONNECTION_STRING && COLLECTION_NAME) {
   );
 }
 
-export { documentCollection };
+export { documentCollection, userCollection };

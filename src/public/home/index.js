@@ -1,5 +1,5 @@
-import "./socket-front-index.js";
-import { createNewDocumentListing } from "./socket-front-index.js";
+import "./indexSocket.js";
+import { createNewDocumentListing } from "./indexSocket.js";
 
 const listedDocuments = document.getElementById("lista-documentos");
 const newListingForm = document.getElementById("form-adiciona-documento");
