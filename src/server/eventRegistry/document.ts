@@ -1,11 +1,11 @@
-import { Server, Socket } from "socket.io";
+import { Namespace, Socket } from "socket.io";
 import {
   findDocument,
   updateDocument,
   deleteDocument,
 } from "../database/documentService.js";
 
-const documentEvents = (socket: Socket, io: Server) => {
+const documentEvents = (socket: Socket, io: Namespace) => {
   socket.on("delete-current-document", async (documentName) => {
     const response = await deleteDocument(documentName);
 

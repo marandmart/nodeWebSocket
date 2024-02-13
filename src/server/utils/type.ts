@@ -12,4 +12,6 @@ type UserDocument = {
   salt: string;
 };
 
-export { UserAuth, UserDocument };
+type NextFunction = (err?: any) => void;
+
+export { UserAuth, UserDocument, NextFunction };

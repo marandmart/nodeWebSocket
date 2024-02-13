@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { registerNewUser, findUser } from "../database/userService.js";
-import { UserAuth } from "./utils/type.js";
+import { UserAuth } from "../utils/type.js";
 
 const registerEvents = (socket: Socket, _: Server) => {
   socket.on("register-new-user", async (data: UserAuth) => {

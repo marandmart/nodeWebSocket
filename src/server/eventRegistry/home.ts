@@ -3,9 +3,9 @@ import {
   retrieveDocuments,
   createNewDocument,
 } from "../database/documentService.js";
-import { Server, Socket } from "socket.io";
+import { Socket, Namespace } from "socket.io";
 
-const homeEvents = (socket: Socket, io: Server) => {
+const homeEvents = (socket: Socket, io: Namespace) => {
   socket.on("retrieve-documents", async (returnDocuments: Function) => {
     const documents = await retrieveDocuments();
     returnDocuments(documents);
