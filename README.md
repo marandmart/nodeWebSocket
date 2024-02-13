@@ -6,6 +6,7 @@
 * Integration between back end and front end
 * Data persistency through mongoDB
 * Able to register user in its' database
+* User authentication system
 
 ## How to run
 
@@ -21,12 +22,13 @@ Compile code:
 yarn compile
 ```
 
-Create a .env file and define the following variables to connect to the mongoDB server:
+Create a .env file and define all the following required variables to connect to the mongoDB server:
 
 - CONNECTION_STRING
 - DATABASE_NAME
 - DOCUMENT_COLLECTION
 - USER_COLLECTION
+- AUTH_SECRET
 
 Where:
 
@@ -34,6 +36,7 @@ Where:
 - DATABASE_NAME -> Name of the database being used.
 - DOCUMENT_COLLECTION -> Name of the collection where the document data is stored.
 - USER_COLLECTION -> Name of the collection where the user data is stored.
+- AUTH_SECRET -> Secret used to create JWT session tokens.
 
 Run Project:
 

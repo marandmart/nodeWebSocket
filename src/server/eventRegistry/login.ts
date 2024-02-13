@@ -1,7 +1,8 @@
 import { Server, Socket } from "socket.io";
 import { findUser } from "../database/userService.js";
-import authenticateUser from "../database/utils/authenticateUser.js";
+import authenticateUser from "./utils/authenticateUser.js";
 import { UserAuth } from "./utils/type.js";
+import generateJWT from "./utils/generateJWT.js";
 
 const loginEvents = (socket: Socket, _: Server) => {
   socket.on("login-authenticate", async ({ username, password }: UserAuth) => {
@@ -14,7 +15,11 @@ const loginEvents = (socket: Socket, _: Server) => {
     const userIsAuthenticated = authenticateUser(password, user);
 
     if (userIsAuthenticated) {
-      socket.emit("successful-authentication");
+      const JWTtoken = generateJWT({ userName: user.username });
+      if (!JWTtoken) {
+        console.error("No auth token defined");
+      }
+      socket.emit("successful-authentication", JWTtoken);
     } else {
       socket.emit("failed-authentication");
     }

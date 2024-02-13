@@ -1,6 +1,6 @@
 import { UserAuth, UserDocument } from "../eventRegistry/utils/type.js";
 import { userCollection } from "./dbConnect.js";
-import createSaltAndHash from "./utils/createSaltAndHash.js";
+import createSaltAndHash from "../eventRegistry/utils/createSaltAndHash.js";
 
 const registerNewUser = ({ username, password }: UserAuth) => {
   const { passwordHash, salt } = createSaltAndHash(password);
