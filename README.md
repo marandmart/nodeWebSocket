@@ -6,7 +6,8 @@
 * Integration between back end and front end
 * Data persistency through mongoDB
 * Able to register user in its' database
-* User authentication system
+* User authentication system using JWT token and user session conceptps
+* Application of namespaces to separate pages that need authentication through middlewares
 
 ## How to run
 
