@@ -8,6 +8,7 @@
 * Able to register user in its' database
 * User authentication system using JWT token and user session conceptps
 * Application of namespaces to separate pages that need authentication through middlewares
+* Managing user connection and disconnection events in multiple routes
 
 ## How to run
 
@@ -23,7 +24,7 @@ Compile code:
 yarn compile
 ```
 
-Create a .env file and define all the following required variables to connect to the mongoDB server:
+Create a .env file in the root directory and define all the following required variables to connect to the mongoDB server:
 
 - CONNECTION_STRING
 - DATABASE_NAME
