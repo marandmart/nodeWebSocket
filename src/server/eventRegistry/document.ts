@@ -7,17 +7,10 @@ import {
 import {
   addNewConnection,
   getUsersInCurrentDocument,
+  removeConnection,
 } from "./utils/activeDocumentConnections.js";
 
 const documentEvents = (socket: Socket, io: Namespace) => {
-  socket.on("delete-current-document", async (documentName) => {
-    const response = await deleteDocument(documentName);
-
-    if (response?.acknowledged) {
-      io.emit("document-successfully-deleted", documentName);
-    }
-  });
-
   // Puts documents in a room. Groups them
   socket.on(
     "select-document",
@@ -40,17 +33,38 @@ const documentEvents = (socket: Socket, io: Namespace) => {
 
         loadPreExistingText(document.text);
       }
-    }
-  );
 
-  socket.on(
-    "text-changed",
-    async ({ text, documentName }: { text: string; documentName: string }) => {
-      const updateResult = await updateDocument(documentName, text);
+      // Registers these events only to those that have loaded the document
+      socket.on("disconnect", () => {
+        removeConnection(username, documentName);
+        const updatedUsersInDocument = getUsersInCurrentDocument(documentName);
+        io.to(documentName).emit("users-in-document", updatedUsersInDocument);
+      });
 
-      if (updateResult && updateResult.modifiedCount === 1) {
-        socket.to(documentName).emit("update-broadcast", text);
-      }
+      socket.on("delete-current-document", async (documentName) => {
+        const response = await deleteDocument(documentName);
+
+        if (response?.acknowledged) {
+          io.emit("document-successfully-deleted", documentName);
+        }
+      });
+
+      socket.on(
+        "text-changed",
+        async ({
+          text,
+          documentName,
+        }: {
+          text: string;
+          documentName: string;
+        }) => {
+          const updateResult = await updateDocument(documentName, text);
+
+          if (updateResult && updateResult.modifiedCount === 1) {
+            socket.to(documentName).emit("update-broadcast", text);
+          }
+        }
+      );
     }
   );
 };

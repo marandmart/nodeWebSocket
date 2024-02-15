@@ -1,6 +1,6 @@
 import { ActiveDocumentData } from "../../utils/interfaces.js";
 
-const documentConnections: ActiveDocumentData[] = [];
+let documentConnections: ActiveDocumentData[] = [];
 
 function addNewConnection(data: ActiveDocumentData) {
   const { username: newUser, documentName: newDocument } = data;
@@ -20,4 +20,14 @@ function getUsersInCurrentDocument(currentDocument: string) {
     .map(({ username }) => username);
 }
 
-export { addNewConnection, getUsersInCurrentDocument };
+function removeConnection(removedUser: string, removedDocument: string) {
+  const index = documentConnections.findIndex(
+    ({ documentName, username }) =>
+      removedUser === username && removedDocument === documentName
+  );
+  if (index !== -1) {
+    documentConnections.splice(index, 1);
+  }
+}
+
+export { addNewConnection, getUsersInCurrentDocument, removeConnection };

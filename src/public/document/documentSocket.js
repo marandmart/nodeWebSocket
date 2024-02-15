@@ -7,11 +7,6 @@ var socket = io("/users", {
     }
 });
 
-socket.on("connect_error", (error) => {
-    alert(error);
-    window.location.href = "/login"
-});
-
 function selectDocument(documentData) {
     socket.emit("select-document", documentData, (text) => {
         updateText(text)
@@ -25,6 +20,11 @@ function emitText(data) {
 function deleteActiveDocument(name) {
     socket.emit("delete-current-document", name)
 }
+
+socket.on("connect_error", (error) => {
+    alert(error);
+    window.location.href = "/login"
+});
 
 // Updates text when text is typed
 socket.on("update-broadcast", (updatedText) => {
