@@ -1,4 +1,4 @@
-import { UserAuth, UserDocument } from "../utils/type.js";
+import { UserAuth, UserDocument } from "../utils/interfaces.js";
 import { userCollection } from "./dbConnect.js";
 import createSaltAndHash from "../eventRegistry/utils/createSaltAndHash.js";
 

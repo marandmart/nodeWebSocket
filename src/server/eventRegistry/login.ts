@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { findUser } from "../database/userService.js";
 import authenticateUser from "./utils/authenticateUser.js";
-import { UserAuth } from "../utils/type.js";
+import { UserAuth } from "../utils/interfaces.js";
 import generateJWT from "./utils/generateJWT.js";
 
 const loginEvents = (socket: Socket, _: Server) => {

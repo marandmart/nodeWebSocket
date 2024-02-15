@@ -1,5 +1,5 @@
 import { scryptSync, timingSafeEqual } from "crypto";
-import { UserDocument } from "../../utils/type.js";
+import { UserDocument } from "../../utils/interfaces.js";
 
 const authenticateUser = (submittedPassword: string, user: UserDocument) => {
   const testHash = scryptSync(submittedPassword, user.salt, 64);

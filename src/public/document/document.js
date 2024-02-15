@@ -6,10 +6,9 @@ const documentName = params.get("name");
 const textEditor = document.getElementById("editor-texto");
 const documentTitle = document.getElementById("titulo-documento");
 const deleteButton = document.getElementById("excluir-documento");
+const connectedUsersList = document.getElementById("usuarios-conectados");
 
 documentTitle.textContent = documentName || "Document sem título";
-
-selectDocument(documentName);
 
 textEditor.addEventListener("keyup", () => {
     emitText({
@@ -32,5 +31,16 @@ function documentDeleted(deletedDocument) {
     }
 };
 
-export { updateText, documentDeleted }
+function handleUserLoadDocument(validatedToken) {
+    selectDocument({ documentName, username: validatedToken.userName });
+};
+
+function handleConnectedUsers(connectedUsers) {
+    connectedUsersList.innerHTML = "";
+    connectedUsers.forEach(user => {
+        connectedUsersList.innerHTML += `<li class="list-group-item">${user}</li>`
+    })
+}
+
+export { updateText, documentDeleted, handleUserLoadDocument, handleConnectedUsers }
 

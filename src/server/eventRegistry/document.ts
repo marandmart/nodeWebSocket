@@ -4,6 +4,10 @@ import {
   updateDocument,
   deleteDocument,
 } from "../database/documentService.js";
+import {
+  addNewConnection,
+  getUsersInCurrentDocument,
+} from "./utils/activeDocumentConnections.js";
 
 const documentEvents = (socket: Socket, io: Namespace) => {
   socket.on("delete-current-document", async (documentName) => {
@@ -17,11 +21,23 @@ const documentEvents = (socket: Socket, io: Namespace) => {
   // Puts documents in a room. Groups them
   socket.on(
     "select-document",
-    async (documentName: string, loadPreExistingText: Function) => {
-      socket.join(documentName);
+    async (
+      { documentName, username }: { documentName: string; username: string },
+      loadPreExistingText: Function
+    ) => {
       const document = await findDocument(documentName);
 
       if (document) {
+        socket.join(documentName);
+
+        addNewConnection({ documentName, username });
+
+        const usersInDocument = getUsersInCurrentDocument(documentName);
+
+        // io.to sends to all people connected to the document
+        // socket.to would send to everyone but the user currently connected to the document
+        io.to(documentName).emit("users-in-document", usersInDocument);
+
         loadPreExistingText(document.text);
       }
     }
