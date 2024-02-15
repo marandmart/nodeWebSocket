@@ -30,4 +30,16 @@ function removeConnection(removedUser: string, removedDocument: string) {
   }
 }
 
-export { addNewConnection, getUsersInCurrentDocument, removeConnection };
+function findPreExistingConnection(newUser: string, newDocument: string) {
+  return documentConnections.find(
+    ({ documentName, username }) =>
+      newUser === username && newDocument === documentName
+  );
+}
+
+export {
+  addNewConnection,
+  getUsersInCurrentDocument,
+  removeConnection,
+  findPreExistingConnection,
+};

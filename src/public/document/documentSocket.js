@@ -42,5 +42,10 @@ socket.on("login_successful", handleUserLoadDocument);
 
 socket.on("users-in-document", handleConnectedUsers);
 
+socket.on("user-already-connected", () => {
+    alert("Document already open in another tab")
+    window.location.href = "/"
+})
+
 
 export { emitText, selectDocument, deleteActiveDocument }
