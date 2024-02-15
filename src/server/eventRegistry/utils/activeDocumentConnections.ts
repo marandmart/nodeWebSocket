@@ -3,7 +3,15 @@ import { ActiveDocumentData } from "../../utils/interfaces.js";
 const documentConnections: ActiveDocumentData[] = [];
 
 function addNewConnection(data: ActiveDocumentData) {
-  documentConnections.push(data);
+  const { username: newUser, documentName: newDocument } = data;
+  const userAlreadyConnected = documentConnections.find(
+    ({ username, documentName }) =>
+      username === newUser && documentName === newDocument
+  );
+
+  if (!userAlreadyConnected) {
+    documentConnections.push(data);
+  }
 }
 
 function getUsersInCurrentDocument(currentDocument: string) {
